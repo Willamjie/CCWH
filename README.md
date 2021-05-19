@@ -15,11 +15,5 @@ Authors - wangjunjie <sup>1†</sup>, liaoxiangyun <sup>1,2†</sup>
 ## Training From Scratch
 However, this repository includes all the code required to recreate the experiments mentioned in the paper. This sections provides the instructions required to run these experiments. Imagenet training code is based on the official PyTorch example.
 
-To train a model on ImageNet, run `train_imagenet.py` with the desired model architecture and the path to the ImageNet dataset:
+To train a model on ImageNet, run `train.py` with the desired model architecture and the path to the ImageNet,Cairf10,cairf100 dataset:
 
-### Simple Training
-
-```bash
-python train
-```
-Note, however, that we do not provide model defintions for AlexNet, VGG, etc. Only the ResNet family and MobileNetV2 are officially supported.
