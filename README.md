@@ -20,13 +20,6 @@ To train a model on ImageNet, run `train_imagenet.py` with the desired model arc
 ### Simple Training
 
 ```bash
-python train_imagenet.py -a resnet18 [imagenet-folder]
+python train
 ```
-
-The default learning rate schedule starts at 0.1 and decays by a factor of 10 every 30 epochs. This is appropriate for ResNet and models with batch normalization, but too high for AlexNet and VGG. Use 0.01 as the initial learning rate for AlexNet or VGG:
-
-```bash
-python main.py -a alexnet --lr 0.01 [imagenet-folder with train and val folders]
-```
-
 Note, however, that we do not provide model defintions for AlexNet, VGG, etc. Only the ResNet family and MobileNetV2 are officially supported.
