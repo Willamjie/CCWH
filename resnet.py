@@ -141,7 +141,7 @@ class ResNet(nn.Module):
             )
 
         layers = []
-        layers.append(block(self.inplanes, planes, stride, downsample, use__attention=att_type=='CCWH'))
+        layers.append(block(self.inplanes, planes, stride, downsample, use_attention=att_type=='CCWH'))
         self.inplanes = planes * block.expansion
         for i in range(1, blocks):
             layers.append(block(self.inplanes, planes, use_attention=att_type=='CCWH'))
