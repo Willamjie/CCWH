@@ -1,8 +1,5 @@
 #CCWH: Convolutional  Attention Module
 
-<p float="left">
-  <img src ="figures/CCWH.png"  width="1000"/>
-</p>
 
 Authors - wangjunjie <sup>1†</sup>, liaoxiangyun <sup>1,2†</sup>
 
