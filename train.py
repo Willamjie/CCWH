@@ -5,6 +5,7 @@ Author 'Wang-junjie'.
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from torchcontrib.optim import SWA
 import torchvision
 import torchvision.transforms as transforms
 import argparse
@@ -76,7 +77,9 @@ if __name__ == "__main__":
         net=Model(model_layer[layer]).to(device)
         # loss function and optimizer metod
         criterion = nn.CrossEntropyLoss()  
-        optimizer = torch.optim.SGD(net.parameters(), lr=LR, momentum=0.9, weight_decay=5e-4) #mini-batch momentum-SGD，L2 Regularization
+        #optimizer = torch.optim.SGD(net.parameters(), lr=LR, momentum=0.9, weight_decay=5e-4) #mini-batch momentum-SGD，L2 Regularization
+        base_opt = torch.optim.SGD(model.parameters(), lr=LR,momentum=0.9, weight_decay=5e-4) #mini-batch momentum-SGD，L2 Regularization
+        opt = torchcontrib.optim.SWA(base_opt, swa_start=10, swa_freq=5, swa_lr=0.05)
         with open(os.path.join('results',model_type[layer],"acc.txt"), "w") as f:
             with open(os.path.join('results',model_type[layer],"log.txt"), "w")as f2:
                 for epoch in range(pre_epoch, EPOCH):
@@ -89,13 +92,13 @@ if __name__ == "__main__":
                         length = len(trainloader)
                         inputs, labels = data
                         inputs, labels = inputs.to(device), labels.to(device)
-                        optimizer.zero_grad()
+                        opt.zero_grad()
 
                         # forward + backward
                         outputs = net(inputs)
                         loss = criterion(outputs, labels)
                         loss.backward()
-                        optimizer.step()
+                        opt.step()
 
                         # print loss and ACC
                         sum_loss += loss.item()
@@ -138,3 +141,4 @@ if __name__ == "__main__":
                             print('Saving better model......')
                             torch.save(net.state_dict(), 'best.pth')
                 print("Training Finished, TotalEPOCH=%d" % EPOCH)
+        opt.swap_swa_sgd()
